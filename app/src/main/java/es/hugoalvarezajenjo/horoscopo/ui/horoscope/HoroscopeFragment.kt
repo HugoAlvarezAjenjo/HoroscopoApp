@@ -1,16 +1,16 @@
 package es.hugoalvarezajenjo.horoscopo.ui.horoscope
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import es.hugoalvarezajenjo.horoscopo.databinding.FragmentHoroscopeBinding
 import es.hugoalvarezajenjo.horoscopo.ui.horoscope.adapter.HoroscopeAdapter
@@ -46,9 +46,11 @@ class HoroscopeFragment : Fragment() {
     }
 
     private fun initRecycleView() {
-        this.horoscopeAdapter = HoroscopeAdapter()
+        this.horoscopeAdapter = HoroscopeAdapter(onItemSelected = {
+            Toast.makeText(context, getString(it.horoscopeName), Toast.LENGTH_LONG).show()
+        })
         this.binding.rvHoroscope.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
             adapter = horoscopeAdapter
         }
     }

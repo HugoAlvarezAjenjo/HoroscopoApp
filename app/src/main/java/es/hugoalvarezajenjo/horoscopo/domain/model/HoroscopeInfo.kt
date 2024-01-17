@@ -3,8 +3,8 @@ package es.hugoalvarezajenjo.horoscopo.domain.model
 import es.hugoalvarezajenjo.horoscopo.R
 
 enum class HoroscopeInfo(val horoscopeName: Int, val img: Int) {
-    Aries(R.string.aries ,R.drawable.aries),
-    Taurus(R.string.taurus, R.drawable.tauro),
+    ARIES(R.string.aries ,R.drawable.aries),
+    TAURUS(R.string.taurus, R.drawable.tauro),
     GEMINI(R.string.gemini, R.drawable.geminis),
     CANCER(R.string.cancer, R.drawable.cancer),
     LEO(R.string.leo, R.drawable.leo),
