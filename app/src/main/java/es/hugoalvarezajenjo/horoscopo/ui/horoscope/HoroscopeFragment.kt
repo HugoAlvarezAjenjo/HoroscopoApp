@@ -1,6 +1,7 @@
 package es.hugoalvarezajenjo.horoscopo.ui.horoscope
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,14 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import es.hugoalvarezajenjo.horoscopo.databinding.FragmentHoroscopeBinding
-import kotlinx.coroutines.flow.collect
+import es.hugoalvarezajenjo.horoscopo.ui.horoscope.adapter.HoroscopeAdapter
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HoroscopeFragment : Fragment() {
     private val horoscopeViewModel by viewModels<HoroscopeViewModel>() // Mediante injeccion de dependencias
+    private lateinit var horoscopeAdapter: HoroscopeAdapter
 
     private var _binding: FragmentHoroscopeBinding? = null;
     private val binding get() = _binding!!
@@ -24,25 +27,37 @@ class HoroscopeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View { // Cuando se crea la vista
         _binding = FragmentHoroscopeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?
+    ) { // Cuando la vista ha sido creada
         super.onViewCreated(view, savedInstanceState)
         initUI()
     }
 
     private fun initUI() {
+        initRecycleView()
         initUIState()
     }
 
+    private fun initRecycleView() {
+        this.horoscopeAdapter = HoroscopeAdapter()
+        this.binding.rvHoroscope.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = horoscopeAdapter
+        }
+    }
+
     private fun initUIState() {
-        lifecycleScope.launch { // Corrutina que solo funciona en el ciclo de vida del fragment
+        lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 horoscopeViewModel.horoscope.collect {
-                    TODO("Crear")
+                    horoscopeAdapter.updateList(it)
                 }
             }
         }

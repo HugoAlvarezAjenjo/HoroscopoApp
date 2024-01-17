@@ -10,14 +10,11 @@ import javax.inject.Inject
 @HiltViewModel
 class HoroscopeViewModel @Inject constructor(): ViewModel() {
 
-    private var _horoscope = MutableStateFlow<List<HoroscopeInfo>>(emptyList())
-    val horoscope: StateFlow<List<HoroscopeInfo>> = _horoscope
+    private var _horoscope = MutableStateFlow<List<HoroscopeInfo>>(emptyList()) // Flow: Cada vez que se cambia el fragment lo pinta
+    val horoscope: StateFlow<List<HoroscopeInfo>> = _horoscope // Para que no se modifique desde fuera
 
     init {
-        this._horoscope.value = listOf(HoroscopeInfo.AQUARIUS)
+        this._horoscope.value = listOf(HoroscopeInfo.AQUARIUS, HoroscopeInfo.CANCER, HoroscopeInfo.PISCES)
     }
 
-    fun getHoroscopes() {
-
-    }
 }
