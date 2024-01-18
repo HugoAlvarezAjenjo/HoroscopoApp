@@ -49,7 +49,7 @@ class HoroscopeFragment : Fragment() {
     private fun initRecycleView() {
         this.horoscopeAdapter = HoroscopeAdapter(onItemSelected = {
             findNavController().navigate(
-                HoroscopeFragmentDirections.actionHoroscopeFragmentToHoroscopeDetailActivity()
+                HoroscopeFragmentDirections.actionHoroscopeFragmentToHoroscopeDetailActivity(it)
             )
         })
         this.binding.rvHoroscope.apply {
