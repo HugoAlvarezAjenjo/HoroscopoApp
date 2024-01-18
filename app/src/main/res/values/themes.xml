@@ -10,7 +10,19 @@
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/primaryDark</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Title">
+        <item name="android:textStyle">bold</item>
+        <item name="fontFamily">@font/dancing</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+    <style name="Body" parent="Title">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>
