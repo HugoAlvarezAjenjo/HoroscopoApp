@@ -7,9 +7,9 @@
     <item
         android:id="@+id/luckFragment"
         android:icon="@drawable/ic_cards"
-        android:title="@string/horoscope" />
+        android:title="@string/luck" />
     <item
         android:id="@+id/palmistryFragment"
         android:icon="@drawable/ic_hand"
-        android:title="@string/horoscope" />
+        android:title="@string/palmistry" />
 </menu>
