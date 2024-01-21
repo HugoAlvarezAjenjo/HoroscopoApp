@@ -1,6 +1,7 @@
 package es.hugoalvarezajenjo.horoscopo.ui.luck
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,18 @@ import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import es.hugoalvarezajenjo.horoscopo.R
 import es.hugoalvarezajenjo.horoscopo.databinding.FragmentLuckBinding
+import es.hugoalvarezajenjo.horoscopo.ui.provider.RandomCardProvider
 import java.util.Random
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LuckFragment : Fragment() {
 
     private var _binding: FragmentLuckBinding? = null;
     private val binding get() = _binding!!
+
+    @Inject
+    lateinit var randomCardProvider: RandomCardProvider
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +43,20 @@ class LuckFragment : Fragment() {
     }
 
     private fun initUI() {
+        preparePrediction()
         initListeners()
+    }
+
+    private fun preparePrediction() {
+        val luck = randomCardProvider.getLucky()
+        luck?.let {
+            val textPrediction = it.text
+            binding.tvLucky.text = getString(textPrediction)
+            binding.ivLuckCard.setImageResource(it.image)
+            binding.tvShare.setOnClickListener {
+                shareResult(getString(textPrediction))
+            }
+        }
     }
 
     private fun initListeners() {
@@ -107,5 +127,16 @@ class LuckFragment : Fragment() {
         })
         binding.preview.startAnimation(disappearAnimation)
         binding.prediction.startAnimation(appearAnimation)
+    }
+
+    private fun shareResult(prediction: String) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, prediction)
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 }
