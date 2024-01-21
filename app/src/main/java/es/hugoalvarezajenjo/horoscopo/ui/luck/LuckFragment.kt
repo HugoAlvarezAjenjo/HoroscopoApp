@@ -17,7 +17,6 @@ import es.hugoalvarezajenjo.horoscopo.R
 import es.hugoalvarezajenjo.horoscopo.databinding.FragmentLuckBinding
 import java.util.Random
 
-@AndroidEntryPoint
 class LuckFragment : Fragment() {
 
     private var _binding: FragmentLuckBinding? = null;
