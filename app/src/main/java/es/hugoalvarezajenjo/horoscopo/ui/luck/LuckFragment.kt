@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.DecelerateInterpolator
@@ -48,7 +49,8 @@ class LuckFragment : Fragment() {
     private fun spinRoulette() {
         val random = Random()
         val degrees = random.nextInt(1440) + 360
-        val animator = ObjectAnimator.ofFloat(binding.ivRoulette, View.ROTATION, 0f, degrees.toFloat())
+        val animator =
+            ObjectAnimator.ofFloat(binding.ivRoulette, View.ROTATION, 0f, degrees.toFloat())
         animator.duration = 2000
         animator.interpolator = DecelerateInterpolator()
         animator.doOnEnd {
@@ -63,9 +65,11 @@ class LuckFragment : Fragment() {
             override fun onAnimationStart(p0: Animation?) {
                 binding.reverse.isVisible = true
             }
+
             override fun onAnimationEnd(p0: Animation?) {
                 growCard()
             }
+
             override fun onAnimationRepeat(p0: Animation?) {}
         })
         binding.reverse.startAnimation(slideUpAnimation)
@@ -75,9 +79,34 @@ class LuckFragment : Fragment() {
         val growAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.grow)
         growAnimation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(p0: Animation?) {}
-            override fun onAnimationEnd(p0: Animation?) {}
+            override fun onAnimationEnd(p0: Animation?) {
+                binding.reverse.isVisible = false
+                showPredictionView()
+            }
             override fun onAnimationRepeat(p0: Animation?) {}
         })
         binding.reverse.startAnimation(growAnimation)
+    }
+
+    private fun showPredictionView() {
+        val disappearAnimation = AlphaAnimation(1f, 0f)
+        disappearAnimation.duration = 200
+
+        val appearAnimation = AlphaAnimation(0f, 1f)
+        appearAnimation.duration = 1000
+
+        disappearAnimation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(p0: Animation?) {}
+
+            override fun onAnimationEnd(p0: Animation?) {
+                binding.preview.isVisible = false
+                binding.prediction.isVisible = true
+            }
+
+            override fun onAnimationRepeat(p0: Animation?) {}
+
+        })
+        binding.preview.startAnimation(disappearAnimation)
+        binding.prediction.startAnimation(appearAnimation)
     }
 }
