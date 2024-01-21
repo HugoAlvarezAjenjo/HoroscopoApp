@@ -1,6 +1,7 @@
 package es.hugoalvarezajenjo.horoscopo.ui.luck
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
 import es.hugoalvarezajenjo.horoscopo.R
 import es.hugoalvarezajenjo.horoscopo.databinding.FragmentLuckBinding
+import es.hugoalvarezajenjo.horoscopo.ui.core.listerners.OnSwipeTouchListener
 import es.hugoalvarezajenjo.horoscopo.ui.provider.RandomCardProvider
 import java.util.Random
 import javax.inject.Inject
@@ -59,10 +61,17 @@ class LuckFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
-        binding.ivRoulette.setOnClickListener {
-            spinRoulette()
-        }
+        binding.ivRoulette.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeRight() {
+                spinRoulette()
+            }
+
+            override fun onSwipeLeft() {
+                spinRoulette()
+            }
+        })
     }
 
     private fun spinRoulette() {
