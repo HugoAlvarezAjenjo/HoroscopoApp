@@ -32,8 +32,7 @@ class LuckFragment : Fragment() {
     lateinit var randomCardProvider: RandomCardProvider
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLuckBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -50,12 +49,12 @@ class LuckFragment : Fragment() {
     }
 
     private fun preparePrediction() {
-        val luck = randomCardProvider.getLucky()
+        val luck = this.randomCardProvider.getLucky()
         luck?.let {
             val textPrediction = it.text
-            binding.tvLucky.text = getString(textPrediction)
-            binding.ivLuckCard.setImageResource(it.image)
-            binding.tvShare.setOnClickListener {
+            this.binding.tvLucky.text = getString(textPrediction)
+            this.binding.ivLuckCard.setImageResource(it.image)
+            this.binding.tvShare.setOnClickListener {
                 shareResult(getString(textPrediction))
             }
         }
@@ -63,7 +62,7 @@ class LuckFragment : Fragment() {
 
     @SuppressLint("ClickableViewAccessibility")
     private fun initListeners() {
-        binding.ivRoulette.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+        this.binding.ivRoulette.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeRight() {
                 spinRoulette()
             }
@@ -78,7 +77,7 @@ class LuckFragment : Fragment() {
         val random = Random()
         val degrees = random.nextInt(1440) + 360
         val animator =
-            ObjectAnimator.ofFloat(binding.ivRoulette, View.ROTATION, 0f, degrees.toFloat())
+            ObjectAnimator.ofFloat(this.binding.ivRoulette, View.ROTATION, 0f, degrees.toFloat())
         animator.duration = 2000
         animator.interpolator = DecelerateInterpolator()
         animator.doOnEnd {
@@ -100,7 +99,7 @@ class LuckFragment : Fragment() {
 
             override fun onAnimationRepeat(p0: Animation?) {}
         })
-        binding.reverse.startAnimation(slideUpAnimation)
+        this.binding.reverse.startAnimation(slideUpAnimation)
     }
 
     private fun growCard() {
@@ -111,9 +110,10 @@ class LuckFragment : Fragment() {
                 binding.reverse.isVisible = false
                 showPredictionView()
             }
+
             override fun onAnimationRepeat(p0: Animation?) {}
         })
-        binding.reverse.startAnimation(growAnimation)
+        this.binding.reverse.startAnimation(growAnimation)
     }
 
     private fun showPredictionView() {
@@ -134,8 +134,8 @@ class LuckFragment : Fragment() {
             override fun onAnimationRepeat(p0: Animation?) {}
 
         })
-        binding.preview.startAnimation(disappearAnimation)
-        binding.prediction.startAnimation(appearAnimation)
+        this.binding.preview.startAnimation(disappearAnimation)
+        this.binding.prediction.startAnimation(appearAnimation)
     }
 
     private fun shareResult(prediction: String) {
@@ -144,7 +144,6 @@ class LuckFragment : Fragment() {
             putExtra(Intent.EXTRA_TEXT, prediction)
             type = "text/plain"
         }
-
         val shareIntent = Intent.createChooser(sendIntent, null)
         startActivity(shareIntent)
     }

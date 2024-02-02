@@ -45,14 +45,14 @@ class PalmistryFragment : Fragment() {
         if (checkCameraPermission()) {
             startCamera()
         } else {
-            requestPermissionLauncher.launch(CAMERA_PERMISSION)
+            this.requestPermissionLauncher.launch(CAMERA_PERMISSION)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPalmistryBinding.inflate(layoutInflater, container, false)
+        this._binding = FragmentPalmistryBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -67,10 +67,9 @@ class PalmistryFragment : Fragment() {
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder().build().also {
-                it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                it.setSurfaceProvider(this.binding.viewFinder.surfaceProvider)
             }
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
             try {
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview)

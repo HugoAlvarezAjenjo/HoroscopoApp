@@ -15,7 +15,7 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
     private val gestureDetector: GestureDetector
 
     init {
-        gestureDetector = GestureDetector(context, GestureListener())
+        this.gestureDetector = GestureDetector(context, GestureListener())
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -23,7 +23,6 @@ open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
     }
 
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
-
 
         override fun onDown(e: MotionEvent): Boolean {
             return true

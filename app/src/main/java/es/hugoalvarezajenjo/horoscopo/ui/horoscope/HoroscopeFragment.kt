@@ -26,16 +26,14 @@ class HoroscopeFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View { // Cuando se crea la vista
         _binding = FragmentHoroscopeBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
+        view: View, savedInstanceState: Bundle?
     ) { // Cuando la vista ha sido creada
         super.onViewCreated(view, savedInstanceState)
         initUI()
