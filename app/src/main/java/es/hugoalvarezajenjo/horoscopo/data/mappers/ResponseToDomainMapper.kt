@@ -7,5 +7,5 @@ fun PredictionResponse.toDomain(): PredictionModel {
     return PredictionModel(
         horoscope = this.horoscope,
         sign = this.sign,
-        )
+    )
 }
